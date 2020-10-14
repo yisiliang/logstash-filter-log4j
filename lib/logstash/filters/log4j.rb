@@ -21,7 +21,7 @@ class LogStash::Filters::Log4j < LogStash::Filters::Base
   config_name "log4j"
 
   # Replace the message with this value.
-  config :message, :validate => :string, :default => "Hello World!"
+  config :source, :validate => :string, :required => true
 
 
   public
@@ -31,15 +31,18 @@ class LogStash::Filters::Log4j < LogStash::Filters::Base
 
   public
   def filter(event)
+    value = event.get(@source)
+    return unless value
 
-    if @message
+    localTimeZone = " +08:00"
+    if value != nil
       timeString = ""
       className = ""
       thradName = ""
       messageString = ""
       funcName= ""
       lineNum=0
-      stringArray = @message.split(']', 4)
+      stringArray = value.split(']', 4)
       arraySize = stringArray.size
       if arraySize >= 1
           timeString = stringArray[0]
@@ -47,6 +50,7 @@ class LogStash::Filters::Log4j < LogStash::Filters::Base
           if timeString[0] == '['
               timeString = timeString[1,length]
           end
+          timeString = "#{timeString}#{localTimeZone}"
       end
 
       if arraySize >= 2
@@ -95,18 +99,19 @@ class LogStash::Filters::Log4j < LogStash::Filters::Base
           end
       end
 
-      # puts timeString
-      # puts className
-      # puts funcName
-      # puts lineNum
-      # puts thradName
-      # puts messageString
-      event.set("timestamp", Time.parse(timeString, "%Y-%m-%d %H:%M:%S,%3N"))
+      @logger.debug? and @logger.debug("timeString=", timeString)
+      @logger.debug? and @logger.debug("className=", className)
+      @logger.debug? and @logger.debug("funcName=", funcName)
+      @logger.debug? and @logger.debug("lineNum=", lineNum)
+      @logger.debug? and @logger.debug("thradName=", thradName)
+      @logger.debug? and @logger.debug("message=", messageString)
+      event.set("timestamp", Time.parse(timeString))
       event.set("className", className)
       event.set("funcName", funcName)
       event.set("lineNum", lineNum)
       event.set("thradName", thradName)
       event.set("message", messageString)
+      event.set("originMessage", value)
       # correct debugging log statement for reference
       # using the event.get API
       @logger.debug? && @logger.debug("Message is now: #{event.get("message")}")

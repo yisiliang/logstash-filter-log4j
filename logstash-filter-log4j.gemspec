@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'logstash-filter-log4j'
-  s.version         = '0.0.1'
+  s.version         = '0.0.2'
   s.licenses = ['Apache-2.0']
   s.summary = "This log4j filter replaces the contents of the message field with the specified value."
   s.description     = "This gem is a Logstash plugin required to be installed on top of the Logstash core pipeline using $LS_HOME/bin/logstash-plugin install gemname. This gem is not a stand-alone program"

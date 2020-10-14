@@ -2,19 +2,20 @@
 require 'spec_helper'
 require "logstash/filters/log4j"
 
-describe LogStash::Filters::Example do
-  describe "Set to Hello World" do
+describe LogStash::Filters::Log4j do
+  describe "Parse Log4j logs" do
     let(:config) do <<-CONFIG
       filter {
         log4j {
-          message => "Hello World"
-        }
+          source => "raw"
+          target => "data"
+          }
       }
     CONFIG
     end
 
-    sample("message" => "some text") do
-      expect(subject.get("message")).to eq('Hello World')
+    sample("raw" => "[2020-10-13 16:59:26,144][org.logicalcobwebs.proxool.ConnectionPool.putConnection(ConnectionPool.java:374)][Thread-45]002177 (00/06/00) - Connection #1 returned (now AVAILABLE)") do
+      expect(subject.get("message")).to eq('002177 (00/06/00) - Connection #1 returned (now AVAILABLE)')
     end
   end
 end

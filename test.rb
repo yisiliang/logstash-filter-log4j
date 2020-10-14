@@ -75,8 +75,12 @@ end
 # puts thradName
 # puts messageString
 
+localTimeZone = " +08:00"
+
 timeString = "2020-10-13 16:59:26,123"
-puts Time.parse(timeString, "%Y-%m-%d %H:%M:%S,%3N").strftime("%d %b %Y %H:%M:%S.%3N")
+timeString = "#{timeString}#{localTimeZone}"
+puts Time.parse("2020-10-13 16:59:26,123 +08:00", "%Y-%m-%d %H:%M:%S,%3N %z")
+puts Time.parse(timeString, "%Y-%m-%d %H:%M:%S,%3N %z").strftime("%d %b %Y %H:%M:%S.%3N")
 
 #.strftime("%d %b %Y %H:%M:%S.%3N")
 
