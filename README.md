@@ -3,6 +3,18 @@
 Parse log4j logs to logstash, sample as below
 
 ```log
-[2020-10-13 16:59:26,144][org.logicalcobwebs.proxool.ConnectionPool.putConnection(ConnectionPool.java:374)][Thread-45]002177 (00/06/00) - Connection #1 returned (now AVAILABLE)
-[DateTime][Class and Function name][Thread Name]message
+[2020-10-14 20:17:00,062][org.hibernate.jdbc.ConnectionManager.afterTransaction(ConnectionManager.java:325)][DefaultQuartzScheduler_Worker-4]transaction completed on session with on_close connection release mode; be sure to close the session to release JDBC resources!
+```
+to
+```json
+{
+    "timestamp": "2020-10-14T12:17:00.062Z",
+    "className": "org.hibernate.jdbc.ConnectionManager.java",
+    "funcName": "afterTransaction",
+    "thradName": "DefaultQuartzScheduler_Worker-4",
+    "message": "transaction completed on session with on_close connection release mode; be sure to close the session to release JDBC resources!",
+    "@timestamp": "2020-10-14T12:17:00.115Z",
+    "originMessage": "[2020-10-14 20:17:00,062][org.hibernate.jdbc.ConnectionManager.afterTransaction(ConnectionManager.java:325)][DefaultQuartzScheduler_Worker-4]transaction completed on session with on_close connection release mode; be sure to close the session to release JDBC resources!"
+
+}
 ```
