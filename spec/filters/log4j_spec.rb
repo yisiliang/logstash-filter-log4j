@@ -1,12 +1,12 @@
 # encoding: utf-8
 require 'spec_helper'
-require "logstash/filters/example"
+require "logstash/filters/log4j"
 
 describe LogStash::Filters::Example do
   describe "Set to Hello World" do
     let(:config) do <<-CONFIG
       filter {
-        example {
+        log4j {
           message => "Hello World"
         }
       }
