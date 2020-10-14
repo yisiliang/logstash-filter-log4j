@@ -10,6 +10,7 @@ to
 {
     "timestamp": "2020-10-14T12:17:00.062Z",
     "className": "org.hibernate.jdbc.ConnectionManager.java",
+    "lineNum": 325,
     "funcName": "afterTransaction",
     "thradName": "DefaultQuartzScheduler_Worker-4",
     "message": "transaction completed on session with on_close connection release mode; be sure to close the session to release JDBC resources!",
