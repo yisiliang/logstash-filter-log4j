@@ -99,12 +99,13 @@ class LogStash::Filters::Log4j < LogStash::Filters::Base
           end
       end
 
-      @logger.debug? and @logger.debug("timeString=", timeString)
-      @logger.debug? and @logger.debug("className=", className)
-      @logger.debug? and @logger.debug("funcName=", funcName)
-      @logger.debug? and @logger.debug("lineNum=", lineNum)
-      @logger.debug? and @logger.debug("thradName=", thradName)
-      @logger.debug? and @logger.debug("message=", messageString)
+      @logger.debug? and @logger.debug("originMessage=#{value}")
+      @logger.debug? and @logger.debug("timeString=#{timeString}")
+      @logger.debug? and @logger.debug("className=#{className}")
+      @logger.debug? and @logger.debug("funcName=#{funcName}")
+      @logger.debug? and @logger.debug("lineNum=#{lineNum}")
+      @logger.debug? and @logger.debug("thradName=#{thradName}")
+      @logger.debug? and @logger.debug("message=#{messageString}")
       event.set("timestamp", Time.parse(timeString))
       event.set("className", className)
       event.set("funcName", funcName)
